@@ -2,14 +2,14 @@
   {
     "Name": "Lab 01: Develop AI solutions with Azure OpenAI Studio",
     "Language": "English",
-    "BaseURL": "https://github.com/CloudLabsAI-Azure/mslearn-ai-studio",
+    "BaseURL": "https://github.com/SaiSindhuja197/mslearn-ai-studio",
     "Files": [
       {
-        "RawFilePath": "https://raw.githubusercontent.com/CloudLabsAI-Azure/mslearn-ai-studio/MS-Innovation/Labs/Standalone-lab01/GettingStartedpage.md",
+        "RawFilePath": "https://raw.githubusercontent.com/SaiSindhuja197/mslearn-ai-studio/MS-Innovation/Labs/Standalone-lab01/GettingStartedpage.md",
         "Order": 1
       },
       {
-        "RawFilePath": "https://raw.githubusercontent.com/CloudLabsAI-Azure/mslearn-ai-studio/MS-Innovation/Labs/use-your-own-data-custom.md",
+        "RawFilePath": "https://raw.githubusercontent.com/SaiSindhuja197/mslearn-ai-studio/MS-Innovation/Labs/use-your-own-data-custom.md",
         "Order": 2
       }
     ]
