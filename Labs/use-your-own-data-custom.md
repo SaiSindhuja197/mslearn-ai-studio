@@ -4,17 +4,18 @@
 
 ## Lab Overview
 
-Retrieval Augmented Generation (RAG) is a design pattern that enables AI developers in Azure to build intelligent applications by combining large language models with organization-specific data. Instead of relying only on the model’s pre-trained knowledge, RAG retrieves relevant information from custom data sources—such as documents, databases, or knowledge bases—and incorporates it into the prompt to generate more accurate, context-aware responses. This approach is widely used for developing chat-based and enterprise AI applications. In this exercise, AI developers will use Microsoft Foundry within Azure to integrate custom data into a generative AI solution, enabling more reliable and domain-specific outputs.
+Retrieval Augmented Generation (RAG) is a design pattern that enables AI developers in Azure to build intelligent applications by combining large language models with organization-specific data. Instead of relying only on the model’s pre-trained knowledge, RAG retrieves relevant information from custom data sources such as documents, databases, or knowledge bases and incorporates it into the prompt to generate more accurate, context-aware responses. This approach is widely used for developing chat-based and enterprise AI applications.
 
 ## Lab Objectives
 
-In this exercise, you will be able to complete the following tasks:
+In this exercise, AI developers will use Microsoft Foundry within Azure to integrate custom data into a generative AI solution, enabling more reliable and domain-specific outputs in the following tasks:
 
 - Task 1: Provision Microsoft Foundry Hub and Project
 - Task 2: Deploy a Model
 - Task 3: Use Prompt Engineering in the Playground
-- Task 4: Create a RAG application
-- Task 5: Run the RAG application
+- Task 4: Add grounding data in the playground
+- Task 5: Create a RAG application
+- Task 6: Run the RAG application
 
 ## Task 1: Provision Microsoft Foundry Hub and Project
 
@@ -91,7 +92,7 @@ In this task, you will configure two models within your Azure Foundry project to
 
 1. Use the following settings in the **Deploy model wizard** and then click on **Deploy**:
 
-    - **Deployment name**: **`gpt-4.1` (1)**
+    - **Deployment name**: **`mygpt` (1)**
     - **Deployment type**: **`Global Standard` (2)**
     - In order to edit the Deployment details click on **Customize (3)**.
 
@@ -108,7 +109,7 @@ In this task, you will configure two models within your Azure Foundry project to
 
     > **Note:** Reducing the Tokens Per Minute (TPM) helps avoid over-using the quota available in the subscription you are using. 10,000 TPM is sufficient for the data used in this exercise.
 
-1. Now lets return to the **Models catalog (1)** page, Make sure the collection is set to **Azure OpenAI (2)**  search and select for **text-embedding-ada-002 (3)**.On the detail page select **Use this model (4)**.
+1. Now lets return to the **Models catalog (1)** page, Make sure the collection is set to **Azure OpenAI (2)**  search and select for **text-embedding-3-large (3)**.On the detail page select **Use this model (4)**.
 
     ![](./media/T2S6.png)
 
@@ -120,13 +121,13 @@ In this task, you will configure two models within your Azure Foundry project to
 
 1. Use the following settings in the **Deploy model wizard** and then click on **Deploy**:
 
-    - **Deployment name**: **`text-embedding-ada-002` (1)**
+    - **Deployment name**: **`textembeded` (1)**
     - **Deployment type**: **`Global Standard` (2)**
     - In order to edit the Deployment details click on **Customize (3)**.
 
         ![](./media/T2S5i.png)
 
-    - **Model version**: **`2(default)`(4)**
+    - **Model version**: **`1(default)`(4)**
     - **Connected AI resource**: **`Select the resource created previously` (5)**
     - **Tokens per Minute Rate Limit (thousands)**: **`10k` (6)**
     - **Content filter**: **`DefaultV2` (7)**
@@ -141,13 +142,13 @@ In this task, you will configure two models within your Azure Foundry project to
 
 ## Task 3: Use Prompt Engineering in the Playground
 
-Before using your index in a RAG-based prompt flow, let’s verify that it can be used to affect generative AI responses.
+In this task, we will see how prompt engineering can influence a generative AI model’s responses, even without integrating your RAG index yet. The goal is to see how the system message can guide the model’s behavior.
 
 1. In the navigation pane on the left, select the **Playgrounds (1)** page and click on the **Try the Chat playground (2)**.
 
     ![](./media/T5S1.png)
 
-1. On the **Chat playground** page, in the Setup pane, ensure that your **gpt-4.1 [version:2025-04-14 (Default)](1)** model deployment is selected. 
+1. On the **Chat playground** page, in the Setup pane, ensure that your **gpt-4.1 (version:2025-04-14) (1)** model deployment is selected. 
 
     ![](./media/T5S2.png)
 
@@ -165,9 +166,9 @@ Before using your index in a RAG-based prompt flow, let’s verify that it can b
 
     ```
     You are a travel assistant that provides information on travel services available from Margie's Travel.
-
     ```
     ![](./media/T5S5.png)
+
     ![](./media/T5S5i.png)
 
 1. In the chat window, enter the same query and review the response.
@@ -182,7 +183,7 @@ Before using your index in a RAG-based prompt flow, let’s verify that it can b
     ```
     ![](./media/T5S7.png)
 
-## Task 3: Add grounding data in the playground
+## Task 4: Add grounding data in the playground
 
 In this task, you will add data to your Azure Foundry project to support your generative AI application. The dataset consists of travel brochures in PDF format from the fictitious travel agency Margie’s Travel. You will upload these documents to the project so they can be indexed and used as a custom data source. This step ensures that the AI solution can retrieve relevant information from the brochures and generate accurate, context-aware responses based on their content.
 
@@ -282,12 +283,13 @@ In this task, you will add data to your Azure Foundry project to support your ge
     - Create the Azure AI Search index.
     - Register the index asset.
 
-## Task 4: Creating RAG application
+## Task 5: Creating RAG application
 
+In this task, we will set up and run a Retrieval-Augmented Generation (RAG) Python application that uses the Microsoft Foundry endpoint and OpenAI SDK to answer user queries based on travel brochures.
 
-1. On the **Microsoft Foundry** portal, go to the Overview page for your project.
+1. On the **Microsoft Foundry** portal, go to the **Overview (1)** page for your project, copy the **API key (2)** and **Azure OpenAI endpoint (3)** to a notepad as we will have to use them later in the task .
 
-1. Find the Foundry endpoint displayed on the welcome screen (for example, https://<your-resource>.services.ai.azure.com/api/projects/<your-project>). Copy this endpoint — you’ll use it to connect to your model.
+    ![](./media/T4S1.png)
 
     > **Note**: The Microsoft Foundry SDK handles authentication and endpoint routing automatically when you use AIProjectClient.get_openai_client(). Make a note of this endpoint.
 
@@ -302,11 +304,17 @@ In this task, you will add data to your Azure Foundry project to support your ge
     ```
     > **Note**: If the Terminal option is not visible click on **(...)**.
 
+    ![](./media/T4S4i.png)
+
     ![](./media/T4S4.png)
 
 1. After the repo has been cloned, Click on **Explorer (1)** then **open the folder (2)** in VS Code, and navigate to the **`C:\labfiles` (3)** then select the folder **mslearn-ai-foundry` (4)** and click on **Select Folder (5)**.
 
     ![](./media/T4S5.png)
+
+    > **Note**: Click on **Yes, I trust the authors**.
+    
+     ![](./media/T4S5n.png)
 
 1. In the VS Code Explorer pane, navigate to **labfiles (1) > foundry-rag (2) > rag-app (3)** and review the files in the folder **(4)**:
 
@@ -321,13 +329,16 @@ In this task, you will add data to your Azure Foundry project to support your ge
 
       ![](./media/T4S8.png)
 
-1. Now lets install the OpenAI SDK package and other required packages by running the following command:
+1. Now lets install the OpenAI SDK package and other required packages by running the following commands:
 
     ```
     pip install -r requirements.txt
     ```
      ![](./media/T4S10.png)
 
+    ```
+    pip install openai tqdm
+    ```
 1. In VS Code, open the **`.env`** file, replace the placeholders and then Save the **`.env`** file.:    
     ```
     API_KEY="your_api_key"
@@ -483,8 +494,9 @@ In this task, you will add data to your Azure Foundry project to support your ge
 
 1. Save the file **(Ctrl+S)**.
 
-## Task 5: Run the RAG application
+## Task 6: Run the RAG application
 
+In this task, we will run and interact with your RAG (Retrieval-Augmented Generation) application after you’ve successfully saved your code:
 1. After saving the RAG code successfully, in the same terminal lets run the application:
 
     ```
