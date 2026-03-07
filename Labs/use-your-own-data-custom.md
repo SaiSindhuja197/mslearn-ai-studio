@@ -41,11 +41,11 @@ To use the Foundry features in this task, you must first create a project that i
 
     ![](./media/create2.png)
 
-1. In the **Create a new project** wizard, enter **aiproject- <inject key="DeploymentID" enableCopy="false" />(1)** for your project. Select the option **Rename hub (2)** to create a new hub. 
+1. In the **Create a new project** wizard, enter **aiproject-<inject key="DeploymentID" enableCopy="false" />(1)** for your project. Select the option **Rename hub (2)** to create a new hub. 
 
     ![](./media/T1S5.png)
 
-1. Enter **aihub- <inject key="DeploymentID" enableCopy="false" /> (1)** name for your new hub and click on **Next (2)**.
+1. Enter **aihub-<inject key="DeploymentID" enableCopy="false" /> (1)** name for your new hub and click on **Next (2)**.
 
     ![](./media/T1S6.png)
 
@@ -310,24 +310,23 @@ In this task, you will add data to your Azure Foundry project to support your ge
 
 1. In the VS Code Explorer pane, navigate to **labfiles (1) > foundry-rag (2) > rag-app (3)** and review the files in the folder **(4)**:
 
-    -`brochures`- the same folder of brochures you downloaded and extracted previously
+    - `brochures`- the same folder of brochures you downloaded and extracted previously
     - `.env` - A configuration file for application settings.
     - `rag-app.py` - The Python code file for the RAG application.
     - `requirements.txt` - A file listing the package dependencies.
 
-     ![](./media/T4S6.png)
+      ![](./media/T4S6.png)
 
 1. In the Explorer pane, right-click the **rag-app (1)** folder containing the application files, and select **Open in integrated terminal (2)**.
 
-    ![](./media/T4S8.png)
-
+      ![](./media/T4S8.png)
 
 1. Now lets install the OpenAI SDK package and other required packages by running the following command:
 
     ```
     pip install -r requirements.txt
     ```
-    ![](./media/T4S10.png)
+     ![](./media/T4S10.png)
 
 1. In VS Code, open the **`.env`** file, replace the placeholders and then Save the **`.env`** file.:    
     ```
