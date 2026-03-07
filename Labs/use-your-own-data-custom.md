@@ -8,6 +8,8 @@ Retrieval Augmented Generation (RAG) is a design pattern that enables AI develop
 
 ## Lab Objectives
 
+In this exercise, you will be able to complete the following tasks:
+
 - Task 1: Provision Microsoft Foundry Hub and Project
 - Task 2: Deploy a Model
 - Task 3: Use Prompt Engineering in the Playground
@@ -295,74 +297,76 @@ In this task, you will add data to your Azure Foundry project to support your ge
 
     ```
     cd C:\labfiles
+
     git clone https://github.com/microsoftlearning/mslearn-ai-studio mslearn-ai-foundry
     ```
     > **Note**: If the Terminal option is not visible click on **(...)**.
 
-1. After the repo has been cloned, Click on **Explorer (1)** then **open the folder (2)** in VS Code, and navigate to the **`C:\labfiles` (3)** then select the folder **mslearn-ai-foundry` (4)**.
+    ![](./media/T4S4.png)
 
-1. In the VS Code Explorer pane, navigate to **labfiles (1) > foundry-rag (2)** and review the files in the folder:
+1. After the repo has been cloned, Click on **Explorer (1)** then **open the folder (2)** in VS Code, and navigate to the **`C:\labfiles` (3)** then select the folder **mslearn-ai-foundry` (4)** and click on **Select Folder (5)**.
 
+    ![](./media/T4S5.png)
+
+1. In the VS Code Explorer pane, navigate to **labfiles (1) > foundry-rag (2) > rag-app (3)** and review the files in the folder **(4)**:
+
+    -`brochures`- the same folder of brochures you downloaded and extracted previously
     - `.env` - A configuration file for application settings.
     - `rag-app.py` - The Python code file for the RAG application.
     - `requirements.txt` - A file listing the package dependencies.
 
-1. Open a terminal in VS Code and navigate to the project folder, then install the required libraries:
+     ![](./media/T4S6.png)
 
-    ```
-    cd mslearn-ai-foundry/labfiles/foundry-rag/python
-    python -m venv labenv
-    ``` 
-1. Activate the virtual environment:
+1. In the Explorer pane, right-click the **rag-app (1)** folder containing the application files, and select **Open in integrated terminal (2)**.
 
-    ```
-    labenv\Scripts\activate
-    ```
-1. Install the required packages:
+    ![](./media/T4S8.png)
+
+
+1. Now lets install the OpenAI SDK package and other required packages by running the following command:
 
     ```
     pip install -r requirements.txt
     ```
-1. In VS Code, open the **`.env`** file, replace the placeholders and then Save the **`.env`** file.:
+    ![](./media/T4S10.png)
 
-    - Replace your_foundry_endpoint with the Foundry endpoint you copied from the project overview page.
-    - Replace your_model_deployment with the name of your gpt-4.1 model deployment (for example, gpt-4.1).
+1. In VS Code, open the **`.env`** file, replace the placeholders and then Save the **`.env`** file.:    
+    ```
+    API_KEY="your_api_key"
+    AZURE_OPENAI_ENDPOINT="your_azure_openai_endpoint"
+    MODEL_DEPLOYMENT="gpt-4.1"
+    API_VERSION = "your_azure_openai_version"
+    ```
+
+     ![](./media/T4S7.png)
 
     > **Note**: If you deployed your gpt-4.1 model to a different region due to insufficient quota, on the Models + Endpoints page, select your model and use its Target URI as your endpoint instead.
 
+1. In the Explorer pane, in the **/labfiles/foundry-rag/python/rag-app** folder, select the **`rag-app.py`** file to open it. Review the existing code. You will add code to use the OpenAI SDK to access your model.
 
-1. Copy the brochures folder you extracted earlier into the mslearn-ai-foundry/labfiles/foundry-rag/python folder. The code will upload these files to create a vector store for file search, lets proceed to write the code to implement the RAG pattern.
-
-1. In VS Code, open the **`rag-app.py`** file.
-In the code file, note the existing statements that have been added at the top of the file to import the necessary packages. Then, find the comment Add references, and add the following code to reference the libraries you installed:
+1. At the top of the code file, under the existing namespace references, find the comment Import namespaces and add the following code to import the namespace you will need to use the OpenAI SDK:
 
     ```
-    # Add references
-    import glob
-    from azure.identity import DefaultAzureCredential
-    from azure.ai.projects import AIProjectClient
+    # import namespaces
+    from openai import OpenAI
     ```
-1. In the main function, under the comment Get configuration settings, note that the code loads the Foundry endpoint and model deployment name values you defined in the configuration file.
-Find the comment Initialize the project client, and add the following code to connect to your Microsoft Foundry project:
+    ![](./media/T4S13.png)
+
+1. In the main function, note that code to load the endpoint and key from the configuration file has already been provided. Then find the comment Initialize the OpenAI client, and add the following code to create a client for the OpenAI API:
 
     ```
-    # Initialize the project client
-    project_client = AIProjectClient(
-        endpoint=foundry_endpoint,
-        credential=DefaultAzureCredential(),
+    # Initialize the OpenAI client
+    openai_client = OpenAI(
+    base_url=azure_openai_endpoint,
+    api_key=api_key
     )
     ```
-1. Find the comment Get an OpenAI client from the project, and add the following code to get an authenticated OpenAI client from your project:
+    ![](./media/T4S14.png)
+
+1. In the mainfunction, find the comment Create vector store and upload files, and add the following code. This code creates a vector store for your model, and uploads the brochures to it.
 
     ```
-    # Get an OpenAI client from the project
-    openai_client = project_client.get_openai_client()
-    ```
-1. Find the comment Upload file and create vector store, and add the following code to upload the brochure files and create a vector store for file search:
-
-    ```
-    # Upload file and create vector store
-    print("Uploading files and creating vector store...")
+    # Create vector store and upload files
+    print("Creating vector store and uploading files...")
     vector_store = openai_client.vector_stores.create(
         name="travel-brochures"
     )
@@ -378,71 +382,128 @@ Find the comment Initialize the project client, and add the following code to co
         f.close()
     print(f"Vector store created with {file_batch.file_counts.completed} files.")
     ```
-    > **Note**: This code uploads all PDF files from the brochures folder, creates a vector store, and waits for the files to be processed. The vector store will be used by the file search tool to find relevant information when answering questions.
+    ![](./media/T4S15.png)
 
-1. Note that the code includes a loop to allow a user to input a prompt until they enter “quit”, and it tracks conversation state using previous_response_id. Find the comment Get a response and add the following code to send the user input to your model using the Responses API with the file search tool:
+1. In the main function, note that code to request a user prompt until the user quits the app has been provided. Within this loop, find the Get a response comment, and add the following code.This code submits a prompt and specifies that the file_search tool can be used to search the vector store.
 
     ```
     # Get a response
     response = openai_client.responses.create(
-        model=model_deployment,
-        instructions="You are a travel assistant that provides information on travel services available from Margie's Travel. Only answer questions based on the provided travel brochure data.",
-        input=input_text,
-        previous_response_id=previous_response_id,
-        tools=[{
-            "type": "file_search",
-            "vector_store_ids": [vector_store.id]
+    model=model_deployment,
+    instructions="You are a travel assistant that provides information on travel services available from Margie's Travel. Only answer questions based on the provided travel brochure data.",
+    input=input_text,
+    previous_response_id=last_response_id,
+    tools=[{
+        "type": "file_search",
+        "vector_store_ids": [vector_store.id]
         }]
     )
     print(response.output_text)
-    previous_response_id = response.id
+    last_response_id = response.id
     ```
-    > **Note**: The Responses API uses previous_response_id to maintain conversation history automatically. The file_search tool is configured with the vector store containing the uploaded brochure data, so the model can search through the documents to find relevant information before responding.
+    ![](./media/T4S16.png)
 
-1. Save the file (Ctrl+S).
+1. Final code should look like the following:
+
+    ```
+    import os
+    from dotenv import load_dotenv
+    import glob
+
+    # import namespaces
+    from openai import OpenAI
+
+    def main(): 
+        # Clear the console
+        os.system('cls' if os.name == 'nt' else 'clear')
+
+        try:
+            # Get configuration settings 
+            load_dotenv()
+            azure_openai_endpoint = os.getenv("AZURE_OPENAI_ENDPOINT")
+            api_key = os.getenv("API_KEY")
+            model_deployment = os.getenv("MODEL_DEPLOYMENT")
+
+            # Initialize the OpenAI client
+            openai_client = OpenAI(
+                base_url=azure_openai_endpoint,
+                api_key=api_key
+            )
+
+            # Create vector store and upload files
+            print("Creating vector store and uploading files...")
+            vector_store = openai_client.vector_stores.create(
+            name="travel-brochures"
+            )
+            file_streams = [open(f, "rb") for f in glob.glob("brochures/*.pdf")]
+            if not file_streams:
+                print("No PDF files found in the brochures folder!")
+                return
+            file_batch = openai_client.vector_stores.file_batches.upload_and_poll(
+                vector_store_id=vector_store.id,
+                files=file_streams
+            )
+            for f in file_streams:
+                f.close()
+            print(f"Vector store created with {file_batch.file_counts.completed} files.")
+
+            # Track conversation state
+            last_response_id = None
+
+            # Loop until the user wants to quit
+            while True:
+                input_text = input('\nEnter a question (or type "quit" to exit): ')
+                if input_text.lower() == "quit":
+                    break
+                if len(input_text) == 0:
+                    print("Please enter a question.")
+                    continue
+
+                # Get a response
+                response = openai_client.responses.create(
+                    model=model_deployment,
+                    instructions="You are a travel assistant that provides information on travel services available from Margie's Travel. Only answer questions based on the provided travel brochure data.",
+                    input=input_text,
+                    previous_response_id=last_response_id,
+                    tools=[{
+                        "type": "file_search",
+                        "vector_store_ids": [vector_store.id]
+                    }]
+                )
+                print(response.output_text)
+                last_response_id = response.id
+                
+        except Exception as ex:
+            print(ex)
+
+    if __name__ == '__main__': 
+        main()
+
+    ```
+    > **Note**: Please verify for the indundation errors before running the app.
+
+1. Save the file **(Ctrl+S)**.
 
 ## Task 5: Run the RAG application
 
-1. In the VS Code terminal, sign into Azure:
+1. After saving the RAG code successfully, in the same terminal lets run the application:
 
-    ```
-    az login
-    ```
-1. Run the below command to log in to Azure, navigate to the device login URL `https://microsoft.com/devicelogin` in the browser and copy the authentication code.
-
-   ``` 
-   az login
-   ```
-
-   ![](media/aiwshared.png)
-   
-1. Enter the copied **Authentication code** **(1)** and click on **Next** **(2)**.
-
-   ![](media/Link-code-login.png)
-   
-1. On the **Sign in to Microsoft Azure** tab, you will see a login screen. Enter the following email/username and then click on **Next**.
-
-   * Email/Username: **<inject key="AzureAdUserEmail"></inject>**
-   
-    ![](media/corsspf-username.png)
-
-1. Now enter the following password and click on **Sign in**.
-
-   * Password: **<inject key="AzureAdUserPassword"></inject>**
-
-     ![](media/GS4.png)
-
-    > **Note**: In most scenarios, just using az login will be sufficient. However, if you have subscriptions in multiple tenants, you may need to specify the tenant by using the –tenant parameter. See Sign into Azure interactively using the Azure CLI for details.
-
-1. After you have signed in successfully, in the same terminal run the application:
     ```
     python rag-app.py
     ```
-1. When prompted, enter a question, such as **`Where should I go on vacation to see architecture?`** and review the response from your generative AI model.
+1. When prompted, enter a question and review the response from your generative AI model.
+
+    ```
+    Where should I go on vacation to see architecture?
+    ```
 
 1. Note that the response should include information grounded in the travel brochure data, with references to the source documents.
 
-1. Try a follow-up question, for example **`Where can I stay there?`**
+1. Try a follow-up question, for example as below given prompt and observe the response.
+
+    ```
+    Where can I stay there?
+    ```
 
 1. When you’re finished, enter quit to exit the program.
 
@@ -454,6 +515,7 @@ In this lab, you have accomplished the following:
 - Used the chat playground to utilise the functionalities of prompts, parameters, and code generation.
 
 ### Conclusion
+
 By completing this hands-on lab, you’ve gained practical experience with Azure OpenAI Service and Microsoft Foundry. You started by provisioning an Azure OpenAI resource and deploying a model that supports both conversational and instruction-based scenarios. You then explored the Chat playground, experimenting with prompts, parameters, and few-shot examples to shape model responses. Finally, you tested the model’s ability to generate code, highlighting its potential for developer productivity.
 
 These exercises introduced not just the mechanics of deploying and interacting with models, but also how to configure them for different use cases, whether that’s conversational AI, educational Q\&A, or programming assistance. With this foundation, you’re now better equipped to integrate Azure OpenAI into real-world applications that demand scalability, flexibility, and secure access through the Azure ecosystem.
