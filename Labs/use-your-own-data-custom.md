@@ -8,11 +8,11 @@ Retrieval Augmented Generation (RAG) is a design pattern that enables AI develop
 
 ## Lab Objectives
 
-    - Task 1: Provision Microsoft Foundry Hub and Project
-    - Task 2: Deploy a Model
-    - Task 3: Use Prompt Engineering in the Playground
-    - Task 4: Create a RAG application
-    - Task 5: Run the RAG application
+- Task 1: Provision Microsoft Foundry Hub and Project
+- Task 2: Deploy a Model
+- Task 3: Use Prompt Engineering in the Playground
+- Task 4: Create a RAG application
+- Task 5: Run the RAG application
 
 ## Task 1: Provision Microsoft Foundry Hub and Project
 
@@ -55,8 +55,7 @@ To use the Foundry features in this task, you must first create a project that i
     - **Foundry or Azure OpenAI**: Click on **Create new Foundry (5)**, provide name as **aifoundry-<inject key="DeploymentID" enableCopy="false" /> (6)** and click on **ok(7)**
     - Click on **Create (8)**
 
-    ![](./media/T1S7.png)
-
+     ![](./media/T1S7.png)
 
 1. Now lets wait for your project to be created.
 
@@ -72,8 +71,7 @@ In this task, you will configure two models within your Azure Foundry project to
 
 1. In **aiproject- <inject key="DeploymentID" enableCopy="false" />** inside the **Micrsoft Foundry**, select **Model catalog** from the navigation pane on the left.
 
-    ![](./media/T2S1.png)
-
+     ![](./media/T2S1.png)
 
 1. On the filter panel, select the **Collections (1)** and check the box fror **Azure OpenAI (2)** to filter by Azure OpenAI collections only.
 
@@ -186,15 +184,21 @@ Before using your index in a RAG-based prompt flow, let’s verify that it can b
 
 In this task, you will add data to your Azure Foundry project to support your generative AI application. The dataset consists of travel brochures in PDF format from the fictitious travel agency Margie’s Travel. You will upload these documents to the project so they can be indexed and used as a custom data source. This step ensures that the AI solution can retrieve relevant information from the brochures and generate accurate, context-aware responses based on their content.
 
-1. Open **File Explorer 📁 (1)** from the **Start** menu and navigate to `C:\labfiles`. 
+1. Open **File Explorer 📁 (1)** which is pinned to the task bar and Navigate to `C:\labfiles`. 
 
-1. Create a new folder **📁New Folder (1)** and name it as **brochures (2)**.
+    ![](./media/T3S1.png)
+
+1. Navigate to **`C:\labfiles` (1)**. Create a new folder **📁New Folder (2)** and name it as **brochures (3)**.
+
+    ![](./media/T3S2.png)
 
 1. In a new browser tab, download the zipped archive of brochures on to the **LabVM**.
     ```
     https://github.com/MicrosoftLearning/mslearn-ai-studio/raw/main/data/brochures.zip 
     ```
-1. Open downloaded folder location **📁(1)**.Extract it to a folder named **brochures** on LabVM i.e,`C:\labfiles`.
+1. Open downloaded folder location **📁(1)**.Extract it to a folder named **brochures** on LabVM i.e,`C:\labfiles\brochures` **(2)** then **extract (3)**.
+
+    ![](./media/T3S4.png)
 
 1. Navigate back to the Foundry portal, on the Chat Playground wizard in **Add your data (1)** section click on **+Add new data source (2)**.
 
@@ -211,7 +215,7 @@ In this task, you will add data to your Azure Foundry project to support your ge
 
         - On the File explorer dialogue, Select the all the files from **`brochures`** folder as data source.
 
-            ![](./media/.png)
+            ![](./media/T3S6i.png)
 
         - Click on **`Next`**.
 
@@ -285,16 +289,19 @@ In this task, you will add data to your Azure Foundry project to support your ge
 
     > **Note**: The Microsoft Foundry SDK handles authentication and endpoint routing automatically when you use AIProjectClient.get_openai_client(). Make a note of this endpoint.
 
-1. Open Visual Studio Code on your local computer. 
+1. Open **Visual Studio Code** that is located on the Desktop. 
 
-1. Open a terminal in VS Code (Terminal > New Terminal) and clone the GitHub repo containing the code files for this exercise:
+1. Open a **Terminal (1)** in VS Code then click on **New Terminal(2)** and clone the GitHub repo containing the code files for this exercise:
 
     ```
+    cd C:\labfiles
     git clone https://github.com/microsoftlearning/mslearn-ai-studio mslearn-ai-foundry
     ```
-1. After the repo has been cloned, open the folder in VS Code (File > Open Folder), and navigate to the mslearn-ai-foundry/labfiles/foundry-rag/python folder.
+    > **Note**: If the Terminal option is not visible click on **(...)**.
 
-1. In the VS Code Explorer pane, review the files in the folder:
+1. After the repo has been cloned, Click on **Explorer (1)** then **open the folder (2)** in VS Code, and navigate to the **`C:\labfiles` (3)** then select the folder **mslearn-ai-foundry` (4)**.
+
+1. In the VS Code Explorer pane, navigate to **labfiles (1) > foundry-rag (2)** and review the files in the folder:
 
     - `.env` - A configuration file for application settings.
     - `rag-app.py` - The Python code file for the RAG application.
@@ -315,7 +322,7 @@ In this task, you will add data to your Azure Foundry project to support your ge
 
     ```
     pip install -r requirements.txt
-    ``
+    ```
 1. In VS Code, open the **`.env`** file, replace the placeholders and then Save the **`.env`** file.:
 
     - Replace your_foundry_endpoint with the Foundry endpoint you copied from the project overview page.
