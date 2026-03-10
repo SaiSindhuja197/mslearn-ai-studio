@@ -4,7 +4,7 @@
 
 ## Lab Overview
 
-Retrieval Augmented Generation (RAG) is a design pattern that enables AI developers in Azure to build intelligent applications by combining large language models with organization-specific data. Instead of relying only on the model’s pre-trained knowledge, RAG retrieves relevant information from custom data sources such as documents, databases, or knowledge bases and incorporates it into the prompt to generate more accurate, context-aware responses. This approach is widely used for developing chat-based and enterprise AI applications.
+While working at **Contoso**, you realize that employees often spend too much time searching through internal documents to find answers about company policies, product manuals, or troubleshooting guides. To simplify this process, you decide to build an AI-powered assistant using Retrieval Augmented Generation (RAG) in Azure. Instead of relying only on the model’s general knowledge, the solution retrieves relevant information from Contoso’s internal documents whenever a question is asked and includes it in the prompt sent to the language model. This enables the assistant to provide accurate, context-aware responses based on the organization’s internal knowledge, helping employees find the information they need more quickly.
 
 ## Lab Objectives
 
@@ -80,17 +80,17 @@ In this task, you will configure two models within your Azure Foundry project to
 
     ![](./media/T2S2.png)
 
-1. Search for **gpt-4.1(1)**, select it **(2)**. On the detail page select **Use this model (3)**.
+1. Search for **gpt-4.1(1)**, and select it **(2)**. On the details page click on **Use this model (3)**.
 
     ![](./media/T2S3.png)
 
     ![](./media/T2S3i.png)
 
-1. There will be a pop-up with purchase options appears, select the **Direct from Azure models** option.
+1. There will be a pop-up with purchase options, select the **Direct from Azure models** option it will automatically redirect to the **Deploy model wizard**.
 
     ![](./media/T2S4.png)
 
-1. Use the following settings in the **Deploy model wizard** and then click on **Deploy**:
+1. Use the following settings in the **Deploy model wizard** and then click on **Deploy (8)**:
 
     - **Deployment name**: **`mygpt` (1)**
     - **Deployment type**: **`Global Standard` (2)**
@@ -521,14 +521,21 @@ In this task, we will run and interact with your RAG (Retrieval-Augmented Genera
 ## Summary
 
 In this lab, you have accomplished the following:
-- Provisioned an Azure OpenAI resource.
-- Deployed an Azure OpenAI model within the Microsoft Foundry.
-- Used the chat playground to utilise the functionalities of prompts, parameters, and code generation.
+
+-  Provisioned a Microsoft Foundry Hub and Project in Azure.
+
+- Deployed a generative AI model within Microsoft Foundry.
+
+- Used the Chat Playground to explore prompt engineering techniques, including prompts, parameters, and code generation.
+
+- Added grounding data in the playground to enhance responses with custom information.
+
+- Created a Retrieval Augmented Generation (RAG) application by integrating custom data with the deployed model.
+
+- Ran and tested the RAG application to generate context-aware responses using the indexed data.
 
 ## Conclusion
 
-By completing this hands-on lab, you’ve gained practical experience with Azure OpenAI Service and Microsoft Foundry. You started by provisioning an Azure OpenAI resource and deploying a model that supports both conversational and instruction-based scenarios. You then explored the Chat playground, experimenting with prompts, parameters, and few-shot examples to shape model responses. Finally, you tested the model’s ability to generate code, highlighting its potential for developer productivity.
-
-These exercises introduced not just the mechanics of deploying and interacting with models, but also how to configure them for different use cases, whether that’s conversational AI, educational Q\&A, or programming assistance. With this foundation, you’re now better equipped to integrate Azure OpenAI into real-world applications that demand scalability, flexibility, and secure access through the Azure ecosystem.
+By completing this lab **Generative AI Application Using Your Own Data**, you stepped into the role of an AI developer at Contoso and explored how to build a generative AI solution using Microsoft Foundry in Azure. You provisioned the required Foundry resources, deployed a model, experimented with prompts in the playground, and added custom documents as grounding data. By implementing the Retrieval Augmented Generation (RAG) approach, you created and tested an application that retrieves relevant information and generates accurate, context-aware responses based on organizational data.
 
 ### You have successfully completed the Hands-on lab!

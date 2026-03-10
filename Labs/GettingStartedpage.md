@@ -4,7 +4,7 @@
 
 ## Overview
 
-In this hands-on lab, you will explore how to **build a Retrieval Augmented Generation (RAG)** solution using **Microsoft Foundry** in Azure. You will learn how to deploy the required Foundry hub and project resources, configure embedding and generative models, and integrate locally available custom data into your application. Through guided exercises, you will upload and index documents, enable intelligent data retrieval, and connect the retrieved content to a language model to generate accurate, context-aware responses. By the end of the lab, you will test and validate your application, gaining practical experience in developing enterprise-ready generative AI solutions grounded in your organization’s data.
+At **Contoso** organization, you have been asked to explore how generative AI can help employees quickly find answers from internal documents. To achieve this, you decide to build a solution using **Microsoft Foundry** in Azure and implement the **Retrieval Augmented Generation (RAG)** approach. During this hands-on exercise, you will deploy the required Foundry hub and project resources, configure embedding and generative models, and integrate custom documents that are stored locally. As you progress, you will upload and index these documents so the system can retrieve relevant information when a question is asked. This retrieved content will then be combined with a language model to generate accurate, context-aware responses. By the end of the exercise, you will test and validate the application, gaining practical experience in building an enterprise-ready AI solution that uses your organization’s data.
 
 
 ## Objective
@@ -40,9 +40,15 @@ The flow of the lab will be to use an existing Resource Group, then create and d
 
 - **Microsoft Foundry:** A unified workspace where you deploy, test, and interact with AI models. It provides tools like the Chat Playground for experimenting with conversational use cases, and configuration options for prompts, parameters, and system instructions. Foundry also integrates with observability and monitoring features, making it the primary interface for fine-tuning and experimenting with deployed models.
 
+- **Azure AI Search:** is a cloud-based search service from Microsoft that allows applications to index, search, and retrieve information from large datasets quickly and intelligently. It is commonly used in AI applications, enterprise search systems, and RAG (Retrieval-Augmented Generation) solutions.
+
+- **RAG application:** It stands for Retrieval-Augmented Generation application which is an AI application that retrieves information from external data sources and then uses a language model to generate an answer based on that data.
+
+- **Visual Studio Code (VS Code):** is a free, lightweight code editor developed by Microsoft that developers use to write, edit, and run code.
+
 ## Getting Started with the Lab
 
-Welcome to your Get Started with Azure OpenAI Service Workshop! We've prepared a seamless environment for you to explore and learn about Azure services. Let's begin by making the most of this experience.
+Welcome to your **Generative AI Application Using Your Own Data** Workshop! We've prepared a seamless environment for you to explore and learn about Azure services. Let's begin by making the most of this experience.
  
 ## Accessing Your Lab Environment
  
