@@ -28,7 +28,7 @@ The flow of the lab will be to use an existing Resource Group, then create and d
 
 ## Architecture Diagram:
 
-![](..Standalone-01/media/archdiagram1.png)
+![](media/arch.png)
 
 ## Explanation of Components
 

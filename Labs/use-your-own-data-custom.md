@@ -525,7 +525,7 @@ In this lab, you have accomplished the following:
 - Deployed an Azure OpenAI model within the Microsoft Foundry.
 - Used the chat playground to utilise the functionalities of prompts, parameters, and code generation.
 
-### Conclusion
+## Conclusion
 
 By completing this hands-on lab, you’ve gained practical experience with Azure OpenAI Service and Microsoft Foundry. You started by provisioning an Azure OpenAI resource and deploying a model that supports both conversational and instruction-based scenarios. You then explored the Chat playground, experimenting with prompts, parameters, and few-shot examples to shape model responses. Finally, you tested the model’s ability to generate code, highlighting its potential for developer productivity.
 
