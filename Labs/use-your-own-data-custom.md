@@ -54,7 +54,7 @@ To use the Foundry features in this task, you must first create a project that i
 
     - **Subscription**: Use an existing Azure subscription **(2)**
     - **Resource group**: Select **openai-<inject key="DeploymentID" enableCopy="false" /> (3)**
-    - **Region**: Select **East US2 / Sweden Central (4)**
+    - **Region**: Select ****<inject key="Region" enableCopy="false" /> (4)**
     - **Foundry or Azure OpenAI**: Click on **Create new Foundry (5)**, provide name as **aifoundry-<inject key="DeploymentID" enableCopy="false" /> (6)** and click on **ok(7)**
     - Click on **Create (8)**
 
@@ -64,7 +64,7 @@ To use the Foundry features in this task, you must first create a project that i
 
     ![](./media/T1S8.png)
 
-1. Once the project is successfully created, you will be automatically navigated to the overview page of the **aiproject- <inject key="DeploymentID" enableCopy="false" />**.
+1. Once the project is successfully created, you will be automatically navigated to the overview page of the **aiproject-<inject key="DeploymentID" enableCopy="false" />**.
 
     ![](./media/T1S9.png)
 
@@ -121,7 +121,7 @@ In this task, you will configure two models within your Azure Foundry project to
 
 1. Use the following settings in the **Deploy model wizard** and then click on **Deploy**:
 
-    - **Deployment name**: **`textembeded` (1)**
+    - **Deployment name**: **`mytextembedding` (1)**
     - **Deployment type**: **`Global Standard` (2)**
     - In order to edit the Deployment details click on **Customize (3)**.
 
@@ -148,7 +148,7 @@ In this task, we will see how prompt engineering can influence a generative AI m
 
     ![](./media/T5S1.png)
 
-1. On the **Chat playground** page, in the Setup pane, ensure that your **gpt-4.1 (version:2025-04-14) (1)** model deployment is selected. 
+1. On the **Chat playground** page, in the Setup pane, ensure that your **mygpt (version:2025-04-14) (1)** model deployment is selected. 
 
     ![](./media/T5S2.png)
 
@@ -207,73 +207,69 @@ In this task, you will add data to your Azure Foundry project to support your ge
 
     ![](./media/T3S5.png)
 
-1. In the **Add your data** wizard, add a new index with the following settings:
+1. In the **Add your data** wizard, on the **Source data** wizard add the following and Click on **Next (5)**.:
 
-    - **Source data**:
-
-        - **Data source**: **`Upload files` (1)**.
-        - Click on **`Upload`(2)** 
+    - **Data source**: **`Upload files` (1)**.
+    - Click on **`Upload`(2)** 
             
-            ![](./media/T3S6.png)
+        ![](./media/T3S6.png)
 
-        - On the File explorer dialogue, Select the all the files from **`brochures`** folder as data source.
+    - On the File explorer dialogue, Select the all the files from **`brochures`** folder as data source and click on **Open (3)**. You should see all the selected files loaded **(4)**.
 
-            ![](./media/T3S6i.png)
+        ![](./media/T3S6i.png)
 
-        - Click on **`Next`**.
-
-            ![](./media/T3S6ii.png)
+        ![](./media/T3S6ii.png)
             
-    - **Index configuration**:
+1. On the **Index configuration** wizard, add the following:
 
-        - **Select Azure AI Search Service**: **`Create a new Azure AI Search resource`**.
+    - **Select Azure AI Search Service**: **`Create a new Azure AI Search resource`**.
         
-            ![](./media/T3S6iii.png)
+        ![](./media/T3S6iii.png)
 
-            > **Note**: This will redirect you to the Azure Portal
+        > **Note**: This will redirect you to the Azure Portal
 
-        - Provide the following details to create Azure AI Search Service:
+    - Provide the following details to create **Azure AI Search Service**:
 
-            - **Subscription**: Choose the Default Azure subscription **(1)**
-            - **Resource group**: Select **openai-<inject key="DeploymentID" enableCopy="false" /> (2)**
-            - **Service name**: Name the resource name as **aisearch-<inject key="DeploymentID" enableCopy="false" /> (3)**
-            - **Location**: Use the same location as your AI hub resource **(4)**
-            - **Pricing tier**: Make sure **Basic (5)** is selected
-            - Click on **Review + Create (6)** and then **Create**.
+        - **Subscription**: Choose the Default Azure subscription **(1)**
+        - **Resource group**: Select **openai-<inject key="DeploymentID" enableCopy="false" /> (2)**
+        - **Service name**: Name the resource name as **aisearch-<inject key="DeploymentID" enableCopy="false" /> (3)**
+        - **Location**: Use the same location as your AI hub resource **(4)**
+        - **Pricing tier**: Make sure **Basic (5)** is selected
+        - Click on **Review + Create (6)** and then **Create**.
 
             ![](./media/T4S2iii.png)
 
             ![](./media/T4S2iv.png)
 
-1. Wait for the **AI Search** resource to be created. 
+        - Wait for the **AI Search** resource to be created. 
 
-    ![](./media/T4S3.png)
+            ![](./media/T4S3.png)
 
-1. Lets return to the **Create a vector index** wizard in Microsoft Foundry, click on the drop down of **Select Azure AI Search service** and select **Connect other Azure AI Search (1)** resource and adding a connection to the AI Search resource you just created by clicking on **Add Connection (2)**.
+1. Lets return to the **Create a vector index** on **Index Configuration** wizard, click on the drop down of **Select Azure AI Search service** and select **Connect other Azure AI Search (1)** resource then click on **Add Connection (2)** for adding a connection to the AI Search resource you just created.
 
     ![](./media/T3S8.png)
 
     ![](./media/T3S8i.png)
 
-1. Once the AI search connection is established, from the drop down select **aisearch-<inject key="DeploymentID" enableCopy="false" />**
+1. Once the AI search connection is established, from the drop down select **aisearch-<inject key="DeploymentID" enableCopy="false" />** then click on **Next (3)**
 
     - Vector index: **`brochures-index` (1)**
     - Virtual machine: **`Auto select`(2)**
-    - Click on **Next (3)**
 
         ![](./media/T3S9.png)
 
-    - **Search settings**:
-        - **Vector settings**: Make sure the checkbox is checked for **`Add vector search to this search resource`(3)**
-        - **Azure OpenAI connection**: Select the default Azure OpenAI resource for your hub **(4)**.
-        - **Embedding model**: **`text-embedding-ada-002`** **(5)**
-        - Embedding model deployment: **`text-embedding-ada-002`** **(6)**
-        - Click on **Next (7)**
+1. On the **Search settings** wizard set the following setting and click on **Next** **(7)** :
+
+    - **Vector settings**: Make sure the checkbox is checked for **`Add vector search to this search resource`(3)**
+    - **Azure OpenAI connection**: Select the default Azure OpenAI resource for your hub **(4)**.
+    - **Embedding model**: **`text-embedding-ada-002`** **(5)**
+    - Embedding model deployment: **`mytextembedding`** **(6)**
 
         ![](./media/T3S9i.png)
-    - **Review and Create** : Click on **`Create vector index`** **(8)**
 
-        ![](./media/T3S9ii.png)
+1. On the **Review and Create** wizard, Click on **`Create vector index`** **(8)**
+
+    ![](./media/T3S9ii.png)
 
 1. Wait for the indexing process to be completed, which can take a while depending on available compute resources in your subscription.
 
@@ -339,12 +335,13 @@ In this task, we will set up and run a Retrieval-Augmented Generation (RAG) Pyth
     ```
     pip install openai tqdm
     ```
+
 1. In VS Code, open the **`.env`** file, replace the placeholders and then Save the **`.env`** file.:    
     ```
     API_KEY="your_api_key"
     AZURE_OPENAI_ENDPOINT="your_azure_openai_endpoint"
-    MODEL_DEPLOYMENT="gpt-4.1"
-    API_VERSION = "your_azure_openai_version"
+    MODEL_DEPLOYMENT="your gpt-4.1 model deployment name"
+    
     ```
 
      ![](./media/T4S7.png)
@@ -399,17 +396,19 @@ In this task, we will set up and run a Retrieval-Augmented Generation (RAG) Pyth
     ```
     # Get a response
     response = openai_client.responses.create(
-    model=model_deployment,
-    instructions="You are a travel assistant that provides information on travel services available from Margie's Travel. Only answer questions based on the provided travel brochure data.",
-    input=input_text,
-    previous_response_id=last_response_id,
-    tools=[{
-        "type": "file_search",
-        "vector_store_ids": [vector_store.id]
-        }]
-    )
-    print(response.output_text)
-    last_response_id = response.id
+        model=model_deployment,
+        instructions="You are a travel assistant that provides information on travel services available from Margie's Travel. Only answer questions based on the provided travel brochure data.",
+        input=input_text,
+        previous_response_id=last_response_id,
+        tools=[{
+                "type": "file_search",
+                "vector_store_ids": [vector_store.id]
+            }]
+        )
+
+        print(response.output_text)
+        last_response_id = response.id
+
     ```
     ![](./media/T4S16.png)
 
@@ -422,6 +421,7 @@ In this task, we will set up and run a Retrieval-Augmented Generation (RAG) Pyth
 
     # import namespaces
     from openai import OpenAI
+
 
     def main(): 
         # Clear the console
@@ -443,18 +443,23 @@ In this task, we will set up and run a Retrieval-Augmented Generation (RAG) Pyth
             # Create vector store and upload files
             print("Creating vector store and uploading files...")
             vector_store = openai_client.vector_stores.create(
-            name="travel-brochures"
+                name="travel-brochures"
             )
+
             file_streams = [open(f, "rb") for f in glob.glob("brochures/*.pdf")]
+
             if not file_streams:
                 print("No PDF files found in the brochures folder!")
                 return
+
             file_batch = openai_client.vector_stores.file_batches.upload_and_poll(
                 vector_store_id=vector_store.id,
                 files=file_streams
             )
+
             for f in file_streams:
                 f.close()
+
             print(f"Vector store created with {file_batch.file_counts.completed} files.")
 
             # Track conversation state
@@ -463,8 +468,10 @@ In this task, we will set up and run a Retrieval-Augmented Generation (RAG) Pyth
             # Loop until the user wants to quit
             while True:
                 input_text = input('\nEnter a question (or type "quit" to exit): ')
+
                 if input_text.lower() == "quit":
                     break
+
                 if len(input_text) == 0:
                     print("Please enter a question.")
                     continue
@@ -480,15 +487,16 @@ In this task, we will set up and run a Retrieval-Augmented Generation (RAG) Pyth
                         "vector_store_ids": [vector_store.id]
                     }]
                 )
+
                 print(response.output_text)
                 last_response_id = response.id
-                
+
         except Exception as ex:
             print(ex)
 
+
     if __name__ == '__main__': 
         main()
-
     ```
     > **Note**: Please verify for the indundation errors before running the app.
 
@@ -507,6 +515,8 @@ In this task, we will run and interact with your RAG (Retrieval-Augmented Genera
     ```
     Where should I go on vacation to see architecture?
     ```
+    ![](./media/T6S2.png)
+
 
 1. Note that the response should include information grounded in the travel brochure data, with references to the source documents.
 
